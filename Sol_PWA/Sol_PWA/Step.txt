@@ -1,0 +1,49 @@
+﻿#Step1 
+Install Nuget Package
+WebEssentials.AspNetCore.PWA
+
+#Step 2
+Add Two Icons on wwwroot folder under images folder.
+
+#Step 3
+Add json file (manifest.json) in wwwroot folder. Add the Follwing content
+{
+  "name": "PWA Application",
+  "short_name": "PWA",
+  "description": "The PWA application in the world",
+  "icons": [
+    {
+      "src": "/images/icons/logo192.png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/icons/logo512.png",
+      "sizes": "512x512"
+    }
+  ],
+  "display": "standalone",
+  "start_url": "/"
+}
+
+
+#step 4
+Add PWA MiddleWare in StartUp File on ConfigureServices Method.
+
+		    // DI for HttpContextAccessor
+            services.AddSingleton(typeof(IHttpContextAccessor), typeof(HttpContextAccessor));
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            // Add Progressive Web App.
+            services.AddProgressiveWebApp(new PwaOptions()
+            {
+                RegisterServiceWorker = true,
+                Strategy = ServiceWorkerStrategy.CacheFirst,
+                RoutesToPreCache = "/,/Home/Index,/Home/Privacy"  // List of Routes , seperated
+            }); 
+
+#Step 5
+Run The Application
+
+#Step 6
+Check on Chorm Browser and Click in 3 dots button Where you will get Install PWA Application.
